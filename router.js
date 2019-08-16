@@ -8,11 +8,7 @@ const router = express.Router()
 //渲染首页
 router.get('/', (req, res) => {
     Msg.find()
-        .then(data => {
-            console.log(data)
-            res.render('index.html', {comments: data})
-        })
-        // .then(data => console.log(data))
+        .then(data => res.render('index.html', {comments: data}))
         .catch(err => console.log(err))
 })
 
