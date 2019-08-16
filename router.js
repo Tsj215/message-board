@@ -5,13 +5,14 @@
 const express = require('express')
 const Msg = require('./model/message')
 const router = express.Router()
-
-const myData = new Date()
-
 //渲染首页
 router.get('/', (req, res) => {
     Msg.find()
-        .then(data => res.render('index.html', {comments: data}))
+        .then(data => {
+            console.log(data)
+            res.render('index.html', {comments: data})
+        })
+        // .then(data => console.log(data))
         .catch(err => console.log(err))
 })
 
@@ -22,10 +23,10 @@ router.get('/post', (req, res) => {
 
 //添加留言
 router.post('/post', (req, res) => {
-
+    const myDate = new Date()
     const message = req.body
-    message.dateTime = myData.toLocaleString()
-    // console.log(message)
+    message.dateTime = myDate.toLocaleString()
+    console.log(message)
     new Msg(message).save()
         .then(res.redirect('/'))
         .catch(err => console.log(err))
